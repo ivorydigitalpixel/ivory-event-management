@@ -1,8 +1,11 @@
-# Setup steps (free tiers are enough to start; tell Claude before you add any paid plan)
+# Setup steps
 
-1. **GitHub**: github.com > Sign up > create a *private* repository named `ivory-event-management`. Upload the contents of this folder.
-2. **Supabase**: supabase.com > New project. Choose a region near your customers and save the database password in a password manager (do not paste it anywhere else).
-3. In Supabase open **SQL Editor > New query**, paste the whole of `supabase/migrations/0001_foundation.sql`, press **Run**. Expect "Success. No rows returned." If you see an error, copy the error text to Claude.
-4. In Supabase open **Project Settings > API**. Copy the *Project URL* and the *anon public* key. (Never copy the "service_role" key into chat.)
-5. **Vercel**: vercel.com > Add New > Project > import the GitHub repository. Under **Environment Variables** add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` with the two values from step 4. Press Deploy.
-6. Open the temporary Vercel link, create an account, confirm the email, sign in, and create a workspace. If any step fails, tell Claude exactly what you saw.
+This repository is connected to the existing Supabase project `ivory-event-management`; do not create another project or rerun the foundation migration.
+
+1. Follow [AUTH_SETUP.md](AUTH_SETUP.md).
+2. In Vercel keep the nested `ivory-event-management` directory as the app root.
+3. Set the public environment variables from `.env.example` and redeploy.
+4. In Supabase set the production Site URL and trusted confirmation redirect URLs as documented.
+5. Create an account with a real email, confirm in the same browser, sign in, create a workspace, and sign out. Revisit `/dashboard` to verify access is blocked.
+
+No paid plan or schema change is required for the code update. Configure customer email delivery with your chosen SMTP provider before a public launch.
