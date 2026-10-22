@@ -1,4 +1,5 @@
 import { createWorkspace, signOut } from "./actions";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
@@ -26,7 +27,7 @@ export default async function Dashboard({ searchParams }: { searchParams: { erro
       <ul className="mb-6 space-y-2">
         {(memberships ?? []).filter((m: any) => m.organizations).map((m: any) => (
           <li key={m.organizations.id} className="rounded border bg-white p-3">
-            {m.organizations.name} <span className="text-sm text-gold">({m.role})</span>
+            <Link href={`/dashboard/workspaces/${m.organizations.id}`} className="block hover:underline">{m.organizations.name} <span className="text-sm text-gold">({m.role})</span><span className="mt-2 block text-sm">Open workspace →</span></Link>
           </li>
         ))}
         {!error && (memberships ?? []).length === 0 && <li>No workspace yet. Create your first one below.</li>}
