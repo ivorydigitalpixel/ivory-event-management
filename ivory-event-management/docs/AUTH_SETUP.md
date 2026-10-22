@@ -8,10 +8,10 @@ Keep the Root Directory as `ivory-event-management` (the nested application fold
 
 ## Supabase Dashboard → Authentication → URL Configuration
 
-Set Site URL to `https://ivory-event-management.vercel.app`.
+Set Site URL to `https://ivory-event-management-ivory-digital-pixel.vercel.app`.
 Add redirect URLs:
 
-- `https://ivory-event-management.vercel.app/auth/callback**`
+- `https://ivory-event-management-ivory-digital-pixel.vercel.app/auth/callback**`
 - `http://localhost:3000/auth/callback**`
 
 Add each trusted preview deployment explicitly if testing signup there. Do not allow arbitrary domains. Email/password authentication must be enabled. Keep Confirm email enabled. Default Supabase confirmation emails work with the PKCE callback; open the email in the browser that started signup. The optional `/auth/confirm?token_hash=...&type=email` route also supports custom token-hash templates when custom SMTP is configured. It deliberately rejects recovery/invite tokens because their dedicated flows are not implemented.
