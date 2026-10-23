@@ -8,3 +8,4 @@
 | 2026-10-16 | Can Admins remove other Admins; run sheet visibility for Team Members | OPEN |
 | 2026-10-16 | Guest portals and vendor logins | Out of scope |
 | 2026-10-16 | Platform operator console | Planned, not built yet |
+| 2026-10-23 | Finish shared event edit/status/archive/restore before adding paid operations screens. Archived events remain recoverable; no permanent deletion is exposed. Existing module entitlements and release flags remain unchanged. | Foundation increment |

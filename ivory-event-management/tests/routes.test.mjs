@@ -7,7 +7,7 @@ test("public home and login remain available", { skip: !base }, async () => {
   for (const path of ["/", "/login"]) assert.equal((await get(path)).status, 200);
 });
 test("anonymous dashboard and nested routes preserve their destination", { skip: !base }, async () => {
-  for (const path of ["/dashboard", "/dashboard/events?view=calendar", "/dashboard/events/photo.png", "/dashboard/workspaces/00000000-0000-0000-0000-000000000001/new", "/dashboard/workspaces/00000000-0000-0000-0000-000000000001/events/00000000-0000-0000-0000-000000000002"]) {
+  for (const path of ["/dashboard", "/dashboard/events?view=calendar", "/dashboard/events/photo.png", "/dashboard/workspaces/00000000-0000-0000-0000-000000000001/new", "/dashboard/workspaces/00000000-0000-0000-0000-000000000001/events/00000000-0000-0000-0000-000000000002", "/dashboard/workspaces/00000000-0000-0000-0000-000000000001/events/00000000-0000-0000-0000-000000000002/edit", "/dashboard/workspaces/00000000-0000-0000-0000-000000000001?view=archived"]) {
     const response = await get(path);
     assert.equal(response.status, 307);
     const location = new URL(response.headers.get("location"), base);
