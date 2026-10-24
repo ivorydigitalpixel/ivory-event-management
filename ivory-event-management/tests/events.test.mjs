@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { localToUtc, parseEvent, isUuid } from "../lib/events/input.ts";
+import { localToUtc, localDateTime, parseEvent, isUuid } from "../lib/events/input.ts";
 
 test("event times use the selected zone including half-hour offsets", () => {
   assert.equal(localToUtc("2026-12-01T18:00", "Asia/Bangkok"), "2026-12-01T11:00:00.000Z");
@@ -31,4 +31,12 @@ test("event input enforces lengths, type and ID format", () => {
   for (const values of [{ name: " " }, { name: "x".repeat(121) }, { notes: "x".repeat(4001) }, { event_type: "unexpected" }]) assert.throws(() => parseEvent(form(values)), /fields/);
   assert.equal(isUuid("invalid"), false);
   assert.equal(isUuid("00000000-0000-0000-0000-000000000001"), true);
+});
+
+test("edit forms round-trip saved dates in the event zone across midnight and DST", () => {
+  for (const [instant, zone] of [["2026-12-01T20:30:00.000Z", "Asia/Bangkok"], ["2026-07-01T16:00:00.000Z", "America/New_York"], ["2026-12-01T18:30:00.000Z", "Asia/Kolkata"]]) {
+    assert.equal(localToUtc(localDateTime(instant, zone), zone), instant);
+  }
+  assert.equal(localDateTime("2026-12-01T20:30:00Z", "Asia/Bangkok"), "2026-12-02T03:30");
+  assert.equal(localDateTime(null, "Asia/Bangkok"), "");
 });

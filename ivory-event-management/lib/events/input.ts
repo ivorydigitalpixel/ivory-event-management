@@ -1,5 +1,6 @@
 export const timeZones = ["Asia/Bangkok", "Asia/Singapore", "Asia/Kolkata", "Asia/Dubai", "Europe/London", "Europe/Paris", "America/New_York", "America/Los_Angeles", "Australia/Sydney", "UTC"];
 export const eventTypes = ["wedding", "engagement", "corporate", "birthday", "other"];
+export const eventStatuses = ["draft", "planning", "confirmed", "completed", "cancelled"];
 export const isUuid = (value: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value);
 
 // Convert wall-clock input using the EVENT zone, independent of the server/browser zone.
@@ -31,4 +32,11 @@ export function parseEvent(form: FormData) {
   const ends_at = read("ends_at") ? localToUtc(read("ends_at"), time_zone) : null;
   if (ends_at && ends_at <= starts_at) throw new Error("end");
   return { name, venue: venue || null, notes: notes || null, event_type, time_zone, starts_at, ends_at };
+}
+
+/** Format a saved instant for datetime-local without using the browser's zone. */
+export function localDateTime(instant: string | null, zone: string): string {
+  if (!instant) return "";
+  const p = Object.fromEntries(new Intl.DateTimeFormat("en-CA", { timeZone: zone, year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(new Date(instant)).map(({ type, value }) => [type, value]));
+  return `${p.year}-${p.month}-${p.day}T${p.hour}:${p.minute}`;
 }
